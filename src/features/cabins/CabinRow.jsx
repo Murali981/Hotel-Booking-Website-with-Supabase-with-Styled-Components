@@ -56,6 +56,7 @@ function CabinRow({ cabin }) {
   const queryClient = useQueryClient();
 
   const { isLoading: isDeleting, mutate } = useMutation({
+    // We will use the useMutation to delete the cabin which is provided by the supabase.
     mutationFn: (id) => deleteCabin(id),
     onSuccess: () => {
       toast.success("Cabin has been successfully deleted");

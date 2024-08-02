@@ -14,9 +14,10 @@ import AppLayout from "./ui/AppLayout";
 import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient({
+  // This QueryClient sets up the cache behind the scenes.....
   defaultOptions: {
     queries: {
-      staleTime: 60 * 1000,
+      staleTime: 60 * 1000, // StaleTime is the amount of time the data in the cache  stays fresh .
     },
   },
 });
@@ -24,7 +25,11 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      {/* In the above line  we are wrapping our entire application code with QueryClientProvider because  we 
+       want to provide our  Query data to the entire application tree */}
       <ReactQueryDevtools initialIsOpen={false} />
+      {/* In the above line we are putting the ReactQueryDevtools which will helps us to open reactquery dev tools in the bottom of
+      our web page where you can see a react query devtools icon is present . Click on that icon to see all the react query dev tools */}
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
