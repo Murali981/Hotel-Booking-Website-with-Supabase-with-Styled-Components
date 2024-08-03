@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import { getCabins } from "../../services/apiCabins";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
-import { useCabins } from "./useCabins";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -28,7 +29,15 @@ const TableHeader = styled.header`
 `;
 
 function CabinTable() {
-  const { isLoading, cabins } = useCabins();
+  const {
+    isLoading,
+    data: cabins, // We are renaming the data to cabins
+    error,
+  } = useQuery({
+    queryKey: ["cabins"], // It will uniquely identify the data that we want to query here and the queryKey needs to be an array....
+    queryFn: getCabins, // This is the actual query function which is resposible for querying (or) fetching  the data
+    // through the API given by the react query from the supabase where the cabin data is stored.
+  });
 
   if (isLoading) {
     return <Spinner />;
