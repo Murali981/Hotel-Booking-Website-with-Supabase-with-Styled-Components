@@ -89,6 +89,19 @@ function Window({ children, name }) {
   }
 
   return createPortal(
+    // Here createPortal() is not part of the react but it is a part of react DOM and also this makes sense because we are placing some JSX in the DOM and this
+    // createPortal() receives the first argument as JSX to render , in the below first argument JSX is <overlay>.......</overlay> which we want to render and the second
+    // argument a DOM node that tells where we want to render this JSX . So we are putting "document.body" as the second argument. And now what happens is , our Modal window
+    // will become direct child element to the <body> element and the reason for writing the "document.body" in the second argument is , We have selected the body element to be
+    // the parent element of whatever we want to render and now this modal window will essentially live completely outside of the DOM structure of the application itself which
+    // lives right inside the root div (<div id="root"></div>) . And also what was the nice about this React portal is , Inside the component tree the modal window is still at the
+    // same exact place and that's why we can still pass props to it , If you see in the component tree the modal window is still a child element to the <AddCabin /> component But in
+    // the DOM it is no longer the child element to the <AddCabin /> component . React portal is basically a portal because it allows us to create an invisible tunnel like a portal from
+    // the place where the  component is in the component tree to another place in the DOM tree. But now we might be wondering what's the use of using a React portal here is to
+    // avoid conflicts with the CSS property overflow set to hidden . So many times we built a component like Modal and it just works fine but then some other developer will reuse it
+    // somewhere else and that somewhere else might be a place where the modal will get cutoff by a overflow hidden set on the parent. So this is basically all about reusability and
+    // making sure that the component will never be cut off by an overflow property set to hidden on some parent element. So inorder to avoid this kind of situation , We simply render
+    // the modal completely outside of the rest of the DOM tree. So basically on the top of the DOM tree.
     <Overlay>
       <StyledModal ref={ref}>
         <Button onClick={close}>
