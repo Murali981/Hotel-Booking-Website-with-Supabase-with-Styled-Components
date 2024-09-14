@@ -21,6 +21,7 @@ const StyledConfirmDelete = styled.div`
 `;
 
 function ConfirmDelete({ resourceName, onConfirm, disabled, onCloseModal }) {
+  // Here ConfirmDelete is a child component of the <Model.Window> then this ConfirmDelete will automatically recieve the onClose modal prop
   return (
     <StyledConfirmDelete>
       <Heading as="h3">Delete {resourceName}</Heading>

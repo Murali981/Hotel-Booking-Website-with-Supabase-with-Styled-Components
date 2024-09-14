@@ -28,8 +28,11 @@ function CabinTable() {
   }
 
   return (
+    // If you observe in the below we are wrapping everything inside  <Menus> component
     <Menus>
       <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+        {/* In the above <Table> component we are passing columns as props */}
+        {/* We are passing columns here in one central place */}
         <Table.Header>
           <div></div>
           <div>Cabin</div>
@@ -42,6 +45,12 @@ function CabinTable() {
           data={cabins}
           render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
         />
+        {/* In the above the <Table.Body /> self closing component where we are passing the cabins into the data props as well as ,
+          We have to pass in  basically the instructions on how this <Table.Body> should actually render the data and here where the render props pattern comes into play.
+          Again reiterating we are passing the data into this <Table.Body>  but it really doesn't know what to do with this cabins data , And it might know that the 
+          passed cabins data is an array and so it will probably loop over that array but then it doesn't know what to do with it , So we are specifying the render prop
+          to tell what to do with the cabins data. So in the render prop if you observe we are saying that iterate over every cabin and render every cabin into the 
+          <CabinRow /> component  */}
       </Table>
     </Menus>
   );

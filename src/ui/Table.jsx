@@ -60,28 +60,37 @@ const Empty = styled.p`
   margin: 2.4rem;
 `;
 
+/// In the below we are following the compound component pattern ///////////
+
+// step 1) Creating the context
 const TableContext = createContext();
 
 function Table({ columns, children }) {
+  // Here this Table recieves columns as props from the <Table> component that we have passed
   return (
     <TableContext.Provider value={{ columns }}>
-      <StyledTable row="table">{children}</StyledTable>
+      {/* In the above we are saying value={{columns}} which means we are passing the columns that we have received as props into the context such that
+     the below Header and Row components can read from the context that we have created above. Reiterating agian all the child components can read the columns from the context 
+      created by the parent component Table  */}
+      <StyledTable role="table">{children}</StyledTable>
     </TableContext.Provider>
   );
 }
 
 function Header({ children }) {
-  const { columns } = useContext(TableContext);
+  const { columns } = useContext(TableContext); // We can get the access to the columns through the useContext() hook from the parent component Table.
 
   return (
+    //  In the below  we are passing the columns that we have read from the context and passing into the StyledHeader which is a styled component as props
     <StyledHeader role="row" columns={columns} as="header">
+      {/* In the above as="header" makes (or) converts the <div> element into an <header> element */}
       {children}
     </StyledHeader>
   );
 }
 
 function Row({ children }) {
-  const { columns } = useContext(TableContext);
+  const { columns } = useContext(TableContext); // We can get the access to the columns through the useContext() hook from the parent component Table.
 
   return (
     <StyledRow role="row" columns={columns}>
@@ -91,11 +100,13 @@ function Row({ children }) {
 }
 
 function Body({ data, render }) {
+  // We are accepting the data and render prop that has passed from the <Table.Body> component
   if (!data.length) {
     return <Empty>No data to show at this moment</Empty>;
   }
 
-  return <StyledBody>{data.map(render)}</StyledBody>;
+  return <StyledBody>{data.map(render)}</StyledBody>; // This <StyledBody> will add some padding to the interior , and in this we are taking the data that
+  // we have received from props and map over it. And on each data , we are calling the render prop map(render)
 }
 
 Table.Header = Header;
